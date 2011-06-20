@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = Bijection::VERSION
   s.authors     = ["Ryan Berckmans"]
   s.email       = ["ryan.berckmans@gmail.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/ryanberckmans/bijection"
+  s.summary     = "bijection container in ruby; pre-alpha wip"
+  s.description = s.summay
 
   s.rubyforge_project = "bijection"
 

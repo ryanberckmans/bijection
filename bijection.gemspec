@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Ryan Berckmans"]
   s.email       = ["ryan.berckmans@gmail.com"]
   s.homepage    = "https://github.com/ryanberckmans/bijection"
-  s.summary     = "bijection container in ruby; pre-alpha wip"
-  s.description = s.summary
+  s.summary     = "bijection container in ruby"
+  s.description = s.summary ". See example in Class Bijection."
 
   s.rubyforge_project = "bijection"
 

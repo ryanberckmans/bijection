@@ -2,7 +2,29 @@
 # Bijection is a container similar to a Hash with unique values.
 # {http://en.wikipedia.org/wiki/Bijection}
 #
-# @example b = Bijection.new
+# Bijection associates each non-nil unique x in a set X, with a non-nil unique y in a set Y.
+#
+# @example
+#  b = Bijection.new
+#  b.add 5, 7 # associates 5 in X with 7 in Y
+#  b.size
+#   => 1
+#  b.add 5, 2 # raises, 5 already in X
+#  b.add "foo", 7 # raises, 7 already in Y
+#  b.add "bar", 5 # OK; 5 was not yet in Y
+#  b.size
+#   => 2
+#  b.domain.each { |x| puts x }
+#   => 5
+#   => "bar"
+#  b.range.each { |y| puts y }
+#   => 7
+#   => 5 # i.e., not the "same" 5 that's in X
+#  b.each_pair { |x,y| .. }
+#  x = b.get_x 7 # x == 5
+#  y = b.get_y 5 # y == 7
+#  is_nil = b.get_x "returns nil if not found" # is_nil == nil
+#  b.inverse! # X and Y are now swapped; all as above with x and y swapped
 class Bijection
   VERSION = "0.0.1"
 
@@ -21,7 +43,7 @@ class Bijection
   # @param x the non-nil object associated with y
   # @param y the non-nil object associated with x
   # @note x must be unique in X; y must be unique in Y
-  # @return self
+  # @return [self]
   def add( x, y )
     raise "Bijection: x may not be nil" if x == nil
     raise "Bijection: y may not be nil" if y == nil
@@ -43,7 +65,7 @@ class Bijection
   end
 
   # swap domain X and range Y of this
-  # @return nil
+  # @return [nil]
   def inverse!
     temp = @X
     @X = @Y
@@ -77,7 +99,7 @@ class Bijection
   #  x = 2 ; y = 3
   #  b.add x, y
   #  y = nil
-  #  while 1 { y = b.delete_x x ; b.add x, y }
+  #  while true do y = b.delete_by_x x ; b.add x, y end
   # @return (see #get_x)
   def delete_by_x( x )
     y = @X[x]
@@ -89,6 +111,7 @@ class Bijection
   # given y, delete (x,y) and return x
   # @param (see #get_y)
   # @return (see #get_y)
+  # see example #delete_by_x
   def delete_by_y( y )
     x = @Y[y]
     @Y.delete y

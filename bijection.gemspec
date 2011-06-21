@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["ryan.berckmans@gmail.com"]
   s.homepage    = "https://github.com/ryanberckmans/bijection"
   s.summary     = "bijection container in ruby"
-  s.description = s.summary ". See example in Class Bijection."
+  s.description = s.summary + ". See example in Class Bijection."
 
   s.rubyforge_project = "bijection"
 

@@ -4,15 +4,11 @@ describe Bijection do
   before(:each) { @b = Bijection.new }
 
   it "initializes with empty domain" do
-    i = 0
-    @b.domain.each { i += 1 }
-    i.should == 0
+    @b.domain.should be_empty
   end
 
   it "initializes with empty range" do
-    i = 0
-    @b.range.each { i += 1 }
-    i.should == 0
+    @b.range.should be_empty
   end
 
   it "initializes with empty size" do
@@ -43,6 +39,18 @@ describe Bijection do
     @b.delete_by_y(5).should be_nil
   end
 
+  it "each_x returns nil" do
+    @b.each_x.should be_nil
+  end
+
+  it "each_y returns nil" do
+    @b.each_y.should be_nil
+  end
+
+  it "each_pair returns nil" do
+    @b.each_pair.should be_nil
+  end
+
   context "with one pair added" do
     before :each do
       @x = 3
@@ -50,19 +58,31 @@ describe Bijection do
       @b.add @x, @y
     end
 
-    it "finds x in the domain" do
-      @b.domain.peek.should == @x
+    it "has domain with exactly x" do
+      @b.domain.should == [@x]
     end
 
-    it "finds y in the range" do
-      @b.range.peek.should == @y
+    it "has range with exactly y" do
+      @b.range.should == [@y]
+    end
+
+    it "finds x in each_x" do
+      @b.each_x { |x| x.should == @x }
+    end
+
+    it "finds y in the each_y" do
+      @b.each_y { |y| y.should == @y }
     end
 
     it "finds x,y in each_pair" do
+      x1 = nil
+      y1 = nil
       @b.each_pair do |x,y|
-        x.should == @x
-        y.should == @y
+        x1 = x
+        y1 = y
       end
+      x1.should == @x
+      y1.should == @y
     end
 
     it "raises when x is re-added" do

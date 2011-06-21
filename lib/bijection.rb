@@ -4,6 +4,8 @@
 #
 # Bijection associates each non-nil unique x in a set X, with a non-nil unique y in a set Y.
 #
+# Please send (welcome) feedback and bug reports to my {https://github.com/ryanberckmans github}.
+#
 # @example
 #  b = Bijection.new
 #  b.add 5, 7 # associates 5 in X with 7 in Y
@@ -14,10 +16,12 @@
 #  b.add "bar", 5 # OK; 5 was not yet in Y
 #  b.size
 #   => 2
-#  b.domain.each { |x| puts x }
+#  d = b.domain # d == [5, "bar"]
+#  r = b.range  # r == [7, 5] # i.e., not the "same" 5 in domain
+#  b.each_x { |x| puts x }
 #   => 5
 #   => "bar"
-#  b.range.each { |y| puts y }
+#  b.each_y { |y| puts y }
 #   => 7
 #   => 5 # i.e., not the "same" 5 that's in X
 #  b.each_pair { |x,y| .. }
@@ -47,21 +51,23 @@ class Bijection
   def add( x, y )
     raise "Bijection: x may not be nil" if x == nil
     raise "Bijection: y may not be nil" if y == nil
-    raise "Bijection: x:#{x.to_s} already present in X" if @X.key? x
-    raise "Bijection: y:#{y.to_s} already present in Y" if @Y.key? y
+    raise "Bijection: #{x.to_s} already present in domain set X" if @X.key? x
+    raise "Bijection: #{y.to_s} already present in range set Y" if @Y.key? y
     @X[x] = y
     @Y[y] = x
     self
   end
 
-  # @return [Enumerator] the domain set X
+  # get the domain set X as an Array
+  # @return [Array]
   def domain
-    @X.each_key
+    @X.keys
   end
 
-  # @return [Enumerator] the range set Y
+  # get the range set Y as an Array
+  # @return [Array]
   def range
-    @Y.each_key
+    @Y.keys
   end
 
   # swap domain X and range Y of this
@@ -87,9 +93,25 @@ class Bijection
     @X[x]
   end
 
-  # @return [Enumerator] an enumerator all (x,y)
+  # @yield [x] each x in domain set X
+  # @return [nil]
+  def each_x
+    @X.each_key { |x| yield x } if block_given?
+    nil
+  end
+
+  # @yield [y] each y in range set Y
+  # @return [nil]
+  def each_y
+    @Y.each_key { |y| yield y } if block_given?
+    nil
+  end
+
+  # @yield [x,y] each (x,y) in sets X and Y
+  # @return [nil]
   def each_pair
-    @X.each_pair
+    @X.each_pair { |x,y| yield x,y } if block_given?
+    nil
   end
 
   # given x, delete (x,y) and return y

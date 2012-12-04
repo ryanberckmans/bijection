@@ -5,6 +5,7 @@ require "bijection"
 Gem::Specification.new do |s|
   s.name        = "bijection"
   s.version     = Bijection::VERSION
+  s.license     = 'BSD'
   s.authors     = ["Ryan Berckmans"]
   s.email       = ["ryan.berckmans@gmail.com"]
   s.homepage    = "https://github.com/ryanberckmans/bijection"

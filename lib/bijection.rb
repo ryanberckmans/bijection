@@ -30,7 +30,7 @@
 #  is_nil = b.get_x "returns nil if not found" # is_nil == nil
 #  b.inverse! # X and Y are now swapped; all as above with x and y swapped
 class Bijection
-  VERSION = "0.1.0"
+  VERSION = "0.1.1"
 
   def initialize
     @X = {} # @X[x] -> y

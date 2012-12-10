@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'bijection'
 
 describe Bijection do
   before(:each) { @b = Bijection.new }
